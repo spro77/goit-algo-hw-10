@@ -12,10 +12,8 @@ N = 100000
 x_rand = np.random.uniform(a, b, N)
 mc_integral = (b - a) * np.mean(f(x_rand))
 
-# Analytical integration using quad
 quad_integral, _ = quad(f, a, b)
 
-# Print results
 print(f"Monte Carlo estimate: {mc_integral}")
 print(f"quad result: {quad_integral}")
 print(f"Absolute error: {abs(mc_integral - quad_integral)}")
