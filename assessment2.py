@@ -1,27 +1,37 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import quad
+import numpy as np
 
+# Define the function and integration limits
 def f(x):
     return np.sin(x)
 
-a, b = 0, np.pi
+a = 0  # Lower limit
+b = np.pi  # Upper limit
 
-N = 100000
-x_rand = np.random.uniform(a, b, N)
-y_rand = f(x_rand)
-monte_carlo_result = (b - a) * np.mean(y_rand)
+# Create a range of x values for plotting
+x = np.linspace(-0.5, np.pi + 0.5, 400)
+y = f(x)
 
-quad_result, _ = quad(f, a, b)
+# Create the plot
+fig, ax = plt.subplots()
 
-print(f"Monte Carlo estimate: {monte_carlo_result}")
-print(f"quad result: {quad_result}")
-print(f"Absolute error: {abs(monte_carlo_result - quad_result)}")
+# Plot the function
+ax.plot(x, y, 'r', linewidth=2)
 
-x = np.linspace(a, b, 100)
-plt.plot(x, f(x), label='f(x) = sin(x)')
-plt.title('Function and Monte Carlo Integration')
-plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.legend()
+# Fill the area under the curve between a and b
+ix = np.linspace(a, b)
+iy = f(ix)
+ax.fill_between(ix, iy, color='gray', alpha=0.3)
+
+# Configure the plot
+ax.set_xlim([x[0], x[-1]])
+ax.set_ylim([min(y) - 0.1, max(y) + 0.1])
+ax.set_xlabel('x')
+ax.set_ylabel('f(x)')
+
+# Add integration limits and title
+ax.axvline(x=a, color='gray', linestyle='--')
+ax.axvline(x=b, color='gray', linestyle='--')
+ax.set_title('Графік інтегрування f(x) = sin(x) від ' + str(a) + ' до ' + str(b))
+plt.grid()
 plt.show()
